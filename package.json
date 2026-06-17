@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "test": "npx playwright test",
+    "test:performance": "npx playwright test tests/performance.spec.js",
+    "test:a11y": "npx playwright test tests/accessibility.spec.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.0",
+    "playwright": "^1.61.0"
+  }
+}

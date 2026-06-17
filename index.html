@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agent Skills</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #111116;
+      --surface: #1b1d23;
+      --surface-soft: #262a31;
+      --text: #f4f4f5;
+      --muted: #8b95a1;
+      --accent: #d8b565;
+      --accent-soft: rgba(216, 181, 101, 0.18);
+      --border: rgba(255, 255, 255, 0.08);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, rgba(216, 181, 101, 0.07), transparent 28%),
+                  radial-gradient(circle at bottom right, rgba(168, 192, 211, 0.06), transparent 25%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .page-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+
+    .site-title {
+      font-size: 0.95rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      position: relative;
+      font-size: 0.95rem;
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--text);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a:focus-visible::after {
+      width: 100%;
+    }
+
+    .hero {
+      display: grid;
+      gap: 34px;
+      padding: 42px 0 24px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2.75rem, 4vw, 4.5rem);
+      line-height: 0.95;
+      max-width: 12ch;
+    }
+
+    .hero p {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .hero-actions {
+      display: inline-flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .hero-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.24s ease, background 0.24s ease;
+    }
+
+    .hero-actions a.primary {
+      background: linear-gradient(135deg, #c19956, #d8b565);
+      color: #111116;
+    }
+
+    .hero-actions a.secondary {
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+    }
+
+    .hero-actions a:hover {
+      transform: translateY(-2px);
+    }
+
+    .section-heading {
+      margin: 0 0 24px;
+      font-size: 1.2rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .section-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 34px;
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(16px);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 28px;
+      min-height: 220px;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(216,181,101,0.28);
+    }
+
+    .skill-card h3 {
+      margin: 0 0 16px;
+      font-size: 1.15rem;
+    }
+
+    .skill-card p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .skill-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .skill-pill span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .proficiency {
+      margin-top: 16px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .proficiency-item {
+      display: grid;
+      gap: 8px;
+    }
+
+    .proficiency-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .proficiency-bar {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+
+    .proficiency-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #d8b565, #b28a4c);
+    }
+
+    .highlight-panel {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      margin-top: 36px;
+    }
+
+    .overview-block {
+      padding: 28px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+    }
+
+    .overview-block h2 {
+      margin-top: 0;
+      font-size: 1.6rem;
+    }
+
+    .overview-block p {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+
+    .contact-form {
+      margin-top: 56px;
+      padding: 36px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid var(--border);
+    }
+
+    .contact-form label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      color: var(--text);
+      padding: 16px 18px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: rgba(216, 181, 101, 0.5);
+      box-shadow: 0 0 0 4px rgba(216, 181, 101, 0.12);
+    }
+
+    .contact-form textarea {
+      min-height: 166px;
+      resize: vertical;
+    }
+
+    .contact-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .contact-form button {
+      margin-top: 20px;
+      background: linear-gradient(135deg, #d8b565, #b28a4c);
+      color: #111116;
+      border: none;
+      border-radius: 999px;
+      padding: 16px 28px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .contact-form button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.18);
+    }
+
+    .footer {
+      margin-top: 64px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    @media (max-width: 820px) {
+      .highlight-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-actions {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page-wrapper {
+        padding: 32px 18px 60px;
+      }
+
+      .skill-card,
+      .section-card,
+      .contact-form,
+      .overview-block {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="site-header">
+      <div class="site-title">Agent Skills Portfolio</div>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#skills">Skills</a>
+        <a href="#proficiency">Proficiency</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero" id="home">
+      <div>
+        <p class="section-heading">Agent Skills</p>
+        <h1>Launch modern agent experiences with calm confidence.</h1>
+        <p>One-page showcase for agent capabilities, blending a streamlined UI with polished skill narratives, measurable proficiencies, and a seamless contact flow.</p>
+        <div class="hero-actions">
+          <a class="primary" href="#contact">Contact</a>
+          <a class="secondary" href="#skills">Explore Skills</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card" id="skills">
+      <p class="section-heading">Featured Capabilities</p>
+      <div class="skills-grid">
+        <article class="skill-card">
+          <h3>Agent Design</h3>
+          <p>Defining behavior, response style, and outcome-driven prompts for agents that perform reliably and elegantly.</p>
+          <div class="skill-pill"><span></span>Persona Definition</div>
+          <div class="skill-pill"><span></span>Flow Composition</div>
+          <div class="skill-pill"><span></span>Timing & Response</div>
+        </article>
+
+        <article class="skill-card">
+          <h3>Intelligent Response</h3>
+          <p>Optimizing comprehension, context retention, and accurate output within dynamic interaction environments.</p>
+          <div class="skill-pill"><span></span>Contextual Recall</div>
+          <div class="skill-pill"><span></span>Conversational Reasoning</div>
+          <div class="skill-pill"><span></span>Intent Mapping</div>
+        </article>
+
+        <article class="skill-card">
+          <h3>Operational Insight</h3>
+          <p>Translating agent capability into measurable processes, workflows, and performance-aware execution.</p>
+          <div class="skill-pill"><span></span>Behavior Metrics</div>
+          <div class="skill-pill"><span></span>Interaction Review</div>
+          <div class="skill-pill"><span></span>Quality Calibration</div>
+        </article>
+
+        <article class="skill-card">
+          <h3>Human-Centered Craft</h3>
+          <p>Balancing technical effectiveness with tone, clarity, and trust through refined messaging and structured guidance.</p>
+          <div class="skill-pill"><span></span>Audience Alignment</div>
+          <div class="skill-pill"><span></span>Clarity & Precision</div>
+          <div class="skill-pill"><span></span>Adaptive Delivery</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-card" id="proficiency">
+      <div class="highlight-panel">
+        <div class="overview-block">
+          <p class="section-heading">Proficiency</p>
+          <h2>Where capabilities translate into performance.</h2>
+          <p>Detailed, easy-to-scan strength indicators for agent design, narrative intelligence, and operational execution. Clear bars show confidence and focus areas at a glance.</p>
+        </div>
+
+        <div>
+          <div class="proficiency">
+            <div class="proficiency-item">
+              <div class="proficiency-label"><span>Agent Architecture</span><strong>95%</strong></div>
+              <div class="proficiency-bar"><div class="proficiency-fill" style="width: 95%"></div></div>
+            </div>
+            <div class="proficiency-item">
+              <div class="proficiency-label"><span>Prompt Craftsmanship</span><strong>92%</strong></div>
+              <div class="proficiency-bar"><div class="proficiency-fill" style="width: 92%"></div></div>
+            </div>
+            <div class="proficiency-item">
+              <div class="proficiency-label"><span>Conversational Logic</span><strong>91%</strong></div>
+              <div class="proficiency-bar"><div class="proficiency-fill" style="width: 91%"></div></div>
+            </div>
+            <div class="proficiency-item">
+              <div class="proficiency-label"><span>Human-Centered Delivery</span><strong>89%</strong></div>
+              <div class="proficiency-bar"><div class="proficiency-fill" style="width: 89%"></div></div>
+            </div>
+            <div class="proficiency-item">
+              <div class="proficiency-label"><span>Workflow Refinement</span><strong>87%</strong></div>
+              <div class="proficiency-bar"><div class="proficiency-fill" style="width: 87%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-form" id="contact">
+      <p class="section-heading">Connect</p>
+      <h2>Let's bring the agent vision into motion.</h2>
+      <p style="color: var(--muted); margin-top: 12px; max-width: 740px;">Share your project brief, collaboration need, or a short note on the agent experience you want to build.</p>
+      <form action="#" method="post" novalidate>
+        <div class="contact-grid">
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" />
+          </div>
+        </div>
+        <div style="margin-top: 20px;">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell me about the agent project or goal."></textarea>
+        </div>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+
+    <footer class="footer">
+      <p>Agent Skills Portfolio • Modern, minimalist, single-page experience</p>
+    </footer>
+  </div>
+</body>
+</html>
