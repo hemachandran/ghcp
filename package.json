@@ -2,6 +2,7 @@
   "scripts": {
     "test": "npx playwright test",
     "test:performance": "npx playwright test tests/performance.spec.js",
+    "test:performance:agentskills": "PERFORMANCE_URL=https://agentskills.io/home PERFORMANCE_OUTPUT=performance-metrics-agentskills.json npx playwright test tests/performance.spec.js",
     "test:a11y": "npx playwright test tests/accessibility.spec.js"
   },
   "devDependencies": {

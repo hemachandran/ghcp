@@ -3,7 +3,7 @@ name: web-accessibility
 description: >
   Use this skill whenever you need to audit, check, or report on the accessibility of a web page or HTML file.
   Triggers include: "check accessibility", "audit this page", "WCAG compliance", "a11y report",
-  "screen reader", "color contrast", "keyboard navigation", "ARIA", "alt text", "generate accessibility report".
+  "screen reader", "color contrast", "keyboard navigation", "ARIA", "alt text", "g ".
   This skill provides a Python script that analyses an HTML file or live URL and produces a rich, self-contained
   HTML accessibility report covering WCAG 2.2 Level A and AA criteria. Use it whenever the user wants to know
   what accessibility issues exist and get actionable guidance to fix them.

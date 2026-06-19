@@ -1,0 +1,21 @@
+{
+  "ttfb": 7.800000000046566,
+  "fcp": 288,
+  "firstPaint": 288,
+  "lcp": 0,
+  "cls": 0,
+  "inp": 120,
+  "domContentLoaded": 244.79999999981374,
+  "load": 244.79999999981374,
+  "interactionDelay": 0,
+  "payloadMb": 0.003269195556640625,
+  "pageUrl": "http://127.0.0.1:3000/performance-test.html",
+  "budgets": {
+    "ttfb": 800,
+    "fcp": 1800,
+    "lcp": 2500,
+    "cls": 0.1,
+    "inp": 200,
+    "payloadMb": 2
+  }
+}
